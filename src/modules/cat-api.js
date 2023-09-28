@@ -4,10 +4,10 @@ import COMMONS from './commons.js';
 import BASIC from './basic.js';
 import Notiflix from 'notiflix';
 
-function fetchBreedsToSelect() {
-  return axios
-    .get(`${COMMONS.BASE_URL}/breeds`)
-    .then(response => {
+async function fetchBreedsToSelect() {
+  try {
+    const response = await axios.get(`${COMMONS.BASE_URL}/breeds`);
+    if (response.status === 200) {
       Notiflix.Notify.success(
         `Загрузка успішна! Завантажилося ${response.data.length} порід котів`,
         {
@@ -19,32 +19,32 @@ function fetchBreedsToSelect() {
           cssAnimationDuration: 300,
         }
       );
-      const breeds = response.data;
-      breeds.forEach(({ id, name }) => {
-        BASIC.addOption(id, name);
-      });
-      new SlimSelect({
-        select: '#beautify',
-      });
-      const firstBreedData = breeds[0];
-      getCat(firstBreedData.id)
-        .then(catData => BASIC.renderCatInfo(catData))
-        .catch(error => BASIC.onFetchError(error));
-    })
-    .catch(error => {
-      BASIC.onFetchError(error);
+    }
+    const breeds = response.data;
+    await breeds.forEach(({ id, name }) => {
+      BASIC.addOption(id, name);
     });
+    new SlimSelect({
+      select: '#beautify',
+    });
+    const firstBreedData = breeds[0];
+    const getCatByID = await getCat(firstBreedData.id);
+    BASIC.renderCatInfo(getCatByID);
+    return response;
+  } catch (error) {
+    BASIC.onFetchError(error);
+  }
 }
 
-function getCat(id) {
-  return axios
-    .get(`${COMMONS.BASE_URL}/images/search?breed_ids=${id}`)
-    .then(response => {
-      if (response.status !== 200) {
-        throw new Error(response.statusText);
-      }
-      return response;
-    });
+async function getCat(id) {
+  try {
+    const response = await axios.get(
+      `${COMMONS.BASE_URL}/images/search?breed_ids=${id}`
+    );
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 export default { fetchBreedsToSelect, getCat };
