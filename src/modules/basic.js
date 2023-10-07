@@ -15,8 +15,8 @@ function renderCatInfo(imageData) {
     },
     url,
   } = imageData.data[0];
-  const markup = `<div class="cat-info-container" style="height: 350px; display: flex;">
-  <img class="for-basiclightbox" style="object-fit: cover;" src="${url}" alt ="${name}" width ="450"/>
+  const markup = `<div class="cat-info-container" style="height: 400px; display: flex;">
+  <img class="for-basiclightbox" style="object-fit: cover;" src="${url}" alt ="${name}" width ="550"/>
     <div id="breed_text">
       <h2>${name}</h2>
       <p>${description}</p>
