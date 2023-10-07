@@ -2,6 +2,7 @@ import 'slim-select/dist/slimselect.css';
 import API from './modules/cat-api';
 import COMMONS from './modules/commons.js';
 import BASIC from './modules/basic.js';
+
 COMMONS.select.classList.add('is-hidden');
 
 API.fetchBreedsToSelect();
