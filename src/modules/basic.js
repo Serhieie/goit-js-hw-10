@@ -28,16 +28,36 @@ function renderCatInfo(imageData) {
 }
 
 function onFetchError(error) {
-  Notiflix.Notify.failure(`Hey something going wrong! ${error}`, {
-    position: 'center-top',
-    width: '650px',
-    fontFamily: 'Arial',
-    fontSize: '18px',
-    timeout: 3000,
-    cssAnimationDuration: 300,
-    messageMaxLength: 200,
-  });
-  COMMONS.loader.classList.add('is-hidden');
+  const errorMarkup = `<div class="cat-info-container" style="height: 400px; display: flex;">
+  <img class="for-basiclightbox" style="object-fit: cover;" src="https://animalhaven.org/hubfs/raw_assets/public/animal-haven/images/placeholder--cat.png" alt ="cat placeholder" width ="750"/>
+  </div>`;
+  if (Object.keys(error).length === 0) {
+    Notiflix.Notify.failure(
+      `Вибачте, але цього котика ми не можемо хавантажити!`,
+      {
+        position: 'center-top',
+        width: '650px',
+        fontFamily: 'Arial',
+        fontSize: '18px',
+        timeout: 3000,
+        cssAnimationDuration: 300,
+        messageMaxLength: 200,
+      }
+    );
+    COMMONS.loader.classList.add('is-hidden');
+    return (COMMONS.container.innerHTML = errorMarkup);
+  } else {
+    Notiflix.Notify.failure(`Невідома помилка, вибачте ${error}`);
+    COMMONS.loader.classList.add('is-hidden');
+    return (COMMONS.container.innerHTML = errorMarkup);
+  }
 }
 
-export default { addOption, renderCatInfo, onFetchError };
+function onloadMarkupFu() {
+  const onloadMarkup = `<div class="cat-info-container" style="height: 400px; display: flex;">
+  <img class="for-basiclightbox" style="object-fit: cover;" src="https://wallpapers.com/images/featured/cat-eyes-2xf0xus42z76qi28.jpg" alt ="cat placeholder" width ="750"/>
+  </div>`;
+  return (COMMONS.container.innerHTML = onloadMarkup);
+}
+
+export default { addOption, renderCatInfo, onFetchError, onloadMarkupFu };

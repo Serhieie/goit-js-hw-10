@@ -26,10 +26,14 @@ async function fetchBreedsToSelect() {
     });
     new SlimSelect({
       select: '#beautify',
+      settings: {
+        placeholderText: 'Оберіть породу кота',
+        font: '20px',
+      },
     });
     const firstBreedData = breeds[0];
     const getCatByID = await getCat(firstBreedData.id);
-    BASIC.renderCatInfo(getCatByID);
+    // BASIC.renderCatInfo(getCatByID);
     return response;
   } catch (error) {
     BASIC.onFetchError(error);
@@ -43,7 +47,7 @@ async function getCat(id) {
     );
     return response;
   } catch (error) {
-    throw new Error(error);
+    return Notiflix.Notify.failure(`Невідома помилка, вибачте ${error}`);
   }
 }
 

@@ -5,6 +5,7 @@ import BASIC from './modules/basic.js';
 
 COMMONS.select.classList.add('is-hidden');
 
+BASIC.onloadMarkupFu();
 API.fetchBreedsToSelect();
 
 setTimeout(() => {

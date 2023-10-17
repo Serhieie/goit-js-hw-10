@@ -109,6 +109,11 @@ body {
   animation: rotation 1.5s linear infinite;
 }
 
+.ss-placeholder {
+  font-size: 24px;
+  justify-content: center;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
