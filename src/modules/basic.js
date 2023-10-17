@@ -1,5 +1,7 @@
 import Notiflix from 'notiflix';
 import COMMONS from './commons.js';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 function addOption(id, name) {
   const option = document.createElement('option');
@@ -15,14 +17,15 @@ function renderCatInfo(imageData) {
     },
     url,
   } = imageData.data[0];
-  const markup = `<div class="cat-info-container" style="height: 400px; display: flex;">
-  <img class="for-basiclightbox" style="object-fit: cover;" src="${url}" alt ="${name}" width ="550"/>
+  const markup = `<div class="cat-info-container">
+  <a class="gallery__link" style="height: 400px; display: flex; box-sizing:border-box" href="${url}" target="_blanc"><img style="object-fit: cover;" src="${url}" alt ="${name}" width ="550"/></a>
     <div id="breed_text">
       <h2>${name}</h2>
       <p>${description}</p>
       <p><span class = "temperament" >Temperament: </span>${temperament}</p>
     </div>
   </div>`;
+
   COMMONS.loader.classList.add('is-hidden');
   return (COMMONS.container.innerHTML = markup);
 }
@@ -60,4 +63,19 @@ function onloadMarkupFu() {
   return (COMMONS.container.innerHTML = onloadMarkup);
 }
 
-export default { addOption, renderCatInfo, onFetchError, onloadMarkupFu };
+function letGallery() {
+  let gallery = new SimpleLightbox('.gallery__link', {
+    overlayOpacity: 1,
+    closeText: '',
+    maxZoom: 2,
+    showCounter: false,
+  });
+}
+
+export default {
+  addOption,
+  renderCatInfo,
+  onFetchError,
+  onloadMarkupFu,
+  letGallery,
+};
